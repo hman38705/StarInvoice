@@ -21,7 +21,7 @@ create_invoice → fund_invoice → mark_delivered → approve_payment → relea
 | `create_invoice`  | ✅ Implemented |
 | `fund_invoice`    | 🚧 TODO        |
 | `mark_delivered`  | 🚧 TODO        |
-| `approve_payment` | 🚧 TODO        |
+| `approve_payment` | ✅ Implemented |
 | `release_payment` | 🚧 TODO        |
 
 ## Project Structure
