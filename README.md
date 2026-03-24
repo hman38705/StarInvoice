@@ -16,6 +16,26 @@ This project is intentionally minimal. The `create_invoice` function is implemen
 create_invoice → fund_invoice → mark_delivered → approve_payment → release_payment
 ```
 
+### State Machine
+
+```mermaid
+stateDiagram-v2
+    [*] --> Pending : create_invoice
+    Pending --> Funded : fund_invoice
+    Pending --> Cancelled : cancel_invoice
+    Funded --> Delivered : mark_delivered
+    Funded --> Cancelled : cancel_invoice
+    Delivered --> Approved : approve_payment
+    Delivered --> Disputed : dispute_invoice
+    Disputed --> Approved : resolve_dispute
+    Disputed --> Cancelled : resolve_dispute
+    Approved --> Completed : release_payment
+    Completed --> [*]
+    Cancelled --> [*]
+```
+
+> Note: `Disputed` and `Cancelled` states are planned — see [issue #5](https://github.com/your-org/StarInvoice/issues/5).
+
 | Function          | Status        |
 |-------------------|---------------|
 | `create_invoice`  | ✅ Implemented |
