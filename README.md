@@ -40,8 +40,8 @@ stateDiagram-v2
 |-------------------|---------------|
 | `create_invoice`  | ✅ Implemented |
 | `fund_invoice`    | 🚧 TODO        |
-| `mark_delivered`  | ✅ Implemented |
-| `approve_payment` | 🚧 TODO        |
+| `mark_delivered`  | 🚧 TODO        |
+| `approve_payment` | ✅ Implemented |
 | `release_payment` | 🚧 TODO        |
 
 ## Project Structure
