@@ -2,7 +2,7 @@ use soroban_sdk::{contracttype, Address, Env, String};
 
 /// Represents the lifecycle state of an invoice.
 #[contracttype]
-#[derive(Clone, PartialEq)]
+#[derive(Clone, PartialEq, Debug)]
 pub enum InvoiceStatus {
     /// Invoice created, awaiting client funding.
     Pending,

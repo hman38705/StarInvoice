@@ -17,9 +17,19 @@ pub fn invoice_created(
     );
 }
 
+/// Emits an event when a client approves delivered work.
+///
+/// Topic: `("INVOICE", "approved")`
+/// Data:  `(invoice_id, client)`
+pub fn approve_payment(env: &Env, invoice_id: u64, client: &Address) {
+    env.events().publish(
+        (symbol_short!("INVOICE"), symbol_short!("approved")),
+        (invoice_id, client.clone()),
+    );
+}
+
 // TODO: Add event emitters for each state transition:
 // - fund_invoice    -> emit "INVOICE funded"   | data: (invoice_id, client)
 // - mark_delivered  -> emit "INVOICE delivered" | data: (invoice_id, freelancer)
-// - approve_payment -> emit "INVOICE approved"  | data: (invoice_id, client)
 // - release_payment -> emit "INVOICE released"  | data: (invoice_id, amount)
 // See: https://github.com/your-org/StarInvoice/issues/7
