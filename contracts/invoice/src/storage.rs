@@ -1,4 +1,11 @@
-use soroban_sdk::{contracttype, Address, Env, String};
+use soroban_sdk::{contracterror, contracttype, Address, Env, String};
+
+#[contracterror]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]
+#[repr(u32)]
+pub enum ContractError {
+    InvoiceNotFound = 1,
+}
 
 /// Represents the lifecycle state of an invoice.
 #[contracttype]
@@ -73,10 +80,10 @@ pub fn save_invoice(env: &Env, invoice: &Invoice) {
         .set(&DataKey::Invoice(invoice.id), invoice);
 }
 
-/// Retrieves an invoice by ID. Panics if the invoice does not exist.
-pub fn get_invoice(env: &Env, invoice_id: u64) -> Invoice {
+/// Retrieves an invoice by ID. Returns Result::Err if not found.
+pub fn get_invoice(env: &Env, invoice_id: u64) -> Result<Invoice, ContractError> {
     env.storage()
         .persistent()
         .get(&DataKey::Invoice(invoice_id))
-        .expect("Invoice not found")
+        .ok_or(ContractError::InvoiceNotFound)
 }

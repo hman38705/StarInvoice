@@ -5,7 +5,7 @@ mod storage;
 
 use soroban_sdk::{contract, contractimpl, token, Address, Env, String};
 
-pub use storage::Invoice;
+pub use storage::{Invoice, ContractError};
 
 #[contract]
 pub struct InvoiceContract;
@@ -60,8 +60,8 @@ impl InvoiceContract {
     /// # Errors
     /// - Panics if the caller is not the invoice client.
     /// - Panics if the invoice status is not `Pending`.
-    pub fn fund_invoice(env: Env, invoice_id: u64, token_address: Address) {
-        let mut invoice = storage::get_invoice(&env, invoice_id);
+    pub fn fund_invoice(env: Env, invoice_id: u64, token_address: Address) -> Result<(), ContractError> {
+        let mut invoice = storage::get_invoice(&env, invoice_id)?;
 
         invoice.client.require_auth();
 
@@ -77,6 +77,7 @@ impl InvoiceContract {
         storage::save_invoice(&env, &invoice);
 
         events::invoice_funded(&env, invoice_id, &invoice.client);
+        Ok(())
     }
 
     /// Allows the freelancer to signal that work has been completed.
@@ -87,8 +88,8 @@ impl InvoiceContract {
     /// # Errors
     /// - Panics if the caller is not the invoice freelancer.
     /// - Panics if the invoice status is not `Funded`.
-    pub fn mark_delivered(env: Env, invoice_id: u64) {
-        let mut invoice = storage::get_invoice(&env, invoice_id);
+    pub fn mark_delivered(env: Env, invoice_id: u64) -> Result<(), ContractError> {
+        let mut invoice = storage::get_invoice(&env, invoice_id)?;
 
         invoice.freelancer.require_auth();
 
@@ -101,6 +102,7 @@ impl InvoiceContract {
         storage::save_invoice(&env, &invoice);
 
         events::mark_delivered(&env, invoice_id, &invoice.freelancer);
+        Ok(())
     }
 
     /// Allows the client to approve the delivered work, authorising fund release.
@@ -114,8 +116,8 @@ impl InvoiceContract {
     ///
     /// # TODO
     /// Not yet implemented. See: <https://github.com/your-org/StarInvoice/issues/3>
-    pub fn approve_payment(env: Env, invoice_id: u64) {
-        let mut invoice = storage::get_invoice(&env, invoice_id);
+    pub fn approve_payment(env: Env, invoice_id: u64) -> Result<(), ContractError> {
+        let mut invoice = storage::get_invoice(&env, invoice_id)?;
 
         invoice.client.require_auth();
 
@@ -128,6 +130,7 @@ impl InvoiceContract {
         storage::save_invoice(&env, &invoice);
 
         events::approve_payment(&env, invoice_id, &invoice.client);
+        Ok(())
     }
 
     /// Returns the current number of invoices.
@@ -136,7 +139,7 @@ impl InvoiceContract {
     }
 
     /// Returns the data for a specific invoice ID.
-    pub fn get_invoice(env: Env, invoice_id: u64) -> Invoice {
+    pub fn get_invoice(env: Env, invoice_id: u64) -> Result<Invoice, ContractError> {
         storage::get_invoice(&env, invoice_id)
     }
 
@@ -149,10 +152,10 @@ impl InvoiceContract {
     /// # Errors
     /// - Panics if the invoice status is not `Pending`.
     /// - Panics if `caller` is neither the freelancer nor the client.
-    pub fn cancel_invoice(env: Env, invoice_id: u64, caller: Address) {
+    pub fn cancel_invoice(env: Env, invoice_id: u64, caller: Address) -> Result<(), ContractError> {
         caller.require_auth();
 
-        let mut invoice = storage::get_invoice(&env, invoice_id);
+        let mut invoice = storage::get_invoice(&env, invoice_id)?;
 
         assert!(
             invoice.status == storage::InvoiceStatus::Pending,
@@ -167,6 +170,8 @@ impl InvoiceContract {
         invoice.status = storage::InvoiceStatus::Cancelled;
         storage::save_invoice(&env, &invoice);
         events::invoice_cancelled(&env, invoice_id, &caller);
+
+        Ok(())
     }
 
     /// Releases escrowed funds to the freelancer once the invoice is approved.
@@ -206,7 +211,7 @@ mod tests {
         assert_eq!(invoice_id, 0);
 
         // Verify the invoice was stored correctly
-        let invoice = env.as_contract(&contract_id, || storage::get_invoice(&env, invoice_id));
+        let invoice = env.as_contract(&contract_id, || storage::get_invoice(&env, invoice_id).unwrap());
         assert_eq!(invoice.freelancer, freelancer);
         assert_eq!(invoice.client, payer);
         assert_eq!(invoice.amount, 1000);
@@ -227,7 +232,7 @@ mod tests {
         let invoice_id = client.create_invoice(&freelancer, &payer, &500, &description);
         client.cancel_invoice(&invoice_id, &freelancer);
 
-        let invoice = env.as_contract(&contract_id, || storage::get_invoice(&env, invoice_id));
+        let invoice = env.as_contract(&contract_id, || storage::get_invoice(&env, invoice_id).unwrap());
         assert_eq!(invoice.status, storage::InvoiceStatus::Cancelled);
     }
 
@@ -246,7 +251,7 @@ mod tests {
         let invoice_id = client.create_invoice(&freelancer, &payer, &200, &description);
         client.cancel_invoice(&invoice_id, &payer);
 
-        let invoice = env.as_contract(&contract_id, || storage::get_invoice(&env, invoice_id));
+        let invoice = env.as_contract(&contract_id, || storage::get_invoice(&env, invoice_id).unwrap());
         assert_eq!(invoice.status, storage::InvoiceStatus::Cancelled);
     }
 
@@ -265,7 +270,7 @@ mod tests {
         let description = String::from_str(&env, "Branding package");
 
         let invoice_id = client.create_invoice(&freelancer, &payer, &750, &description);
-        client.cancel_invoice(&invoice_id, &stranger);
+        let _ = client.cancel_invoice(&invoice_id, &stranger);
     }
 
     #[test]
@@ -287,7 +292,7 @@ mod tests {
         client_contract.cancel_invoice(&invoice_id, &freelancer);
 
         // Attempt to cancel again — should panic
-        client_contract.cancel_invoice(&invoice_id, &freelancer);
+        let _ = client_contract.cancel_invoice(&invoice_id, &freelancer);
     }
 
     #[test]
@@ -319,7 +324,7 @@ mod tests {
         invoice_client.fund_invoice(&invoice_id, &token_address);
 
         // Assert status is now Funded
-        let invoice = env.as_contract(&contract_id, || storage::get_invoice(&env, invoice_id));
+        let invoice = env.as_contract(&contract_id, || storage::get_invoice(&env, invoice_id).unwrap());
         assert_eq!(invoice.status, storage::InvoiceStatus::Funded);
 
         // Assert the contract holds the escrowed tokens
@@ -377,5 +382,20 @@ mod tests {
         assert_eq!(invoice.client, payer);
         assert_eq!(invoice.amount, 1000);
         assert_eq!(invoice.description, description);
+    }
+
+    #[test]
+    fn test_invoice_not_found() {
+        let env = Env::default();
+        let contract_id = env.register_contract(None, InvoiceContract);
+        let client = InvoiceContractClient::new(&env, &contract_id);
+
+        let result = client.try_get_invoice(&999);
+        match result {
+            Err(Ok(errors)) => {
+                assert_eq!(errors, ContractError::InvoiceNotFound.into());
+            }
+            _ => panic!("Expected InvoiceNotFound error"),
+        }
     }
 }
