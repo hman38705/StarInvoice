@@ -57,7 +57,16 @@ pub fn mark_delivered(env: &Env, invoice_id: u64, freelancer: &Address) {
     );
 }
 
+/// Emits event when client disputes invoice.
+pub fn invoice_disputed(env: &Env, invoice_id: u64, client: &Address) {
+    env.events().publish(
+        (symbol_short!("INVOICE"), symbol_short!("disputed")),
+        (invoice_id, client.clone()),
+    );
+}
+
 // TODO: Add event emitters for each state transition:
+
 // - mark_delivered  -> emit "INVOICE delivered" | data: (invoice_id, freelancer)
 // - release_payment -> emit "INVOICE released"  | data: (invoice_id, amount)
 // See: https://github.com/your-org/StarInvoice/issues/7
