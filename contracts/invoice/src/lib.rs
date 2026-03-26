@@ -17,7 +17,9 @@ impl InvoiceContract {
     /// # Parameters
     /// - `freelancer`: Address of the service provider; must sign the transaction.
     /// - `client`: Address of the paying party.
-    /// - `amount`: Payment amount in the smallest token unit (stroops).
+    /// - `amount`: Payment amount in the smallest token unit (stroops). Uses `i128`;
+    ///   overflow is prevented at the platform level via `overflow-checks = true`
+    ///   in the `[profile.release]` section of `contracts/invoice/Cargo.toml`.
     /// - `description`: Human-readable description of the work.
     ///
     /// # Returns
@@ -137,5 +139,26 @@ mod tests {
         assert_eq!(invoice.freelancer, freelancer);
         assert_eq!(invoice.client, payer);
         assert_eq!(invoice.amount, 1000);
+    }
+
+    #[test]
+    fn test_create_invoice_max_amount() {
+        let env = Env::default();
+        env.mock_all_auths();
+
+        let contract_id = env.register_contract(None, InvoiceContract);
+        let client = InvoiceContractClient::new(&env, &contract_id);
+
+        let freelancer = Address::generate(&env);
+        let payer = Address::generate(&env);
+        let description = String::from_str(&env, "Max amount invoice");
+
+        // Verify that i128::MAX is accepted without overflow.
+        // Overflow protection is guaranteed by `overflow-checks = true` in
+        // [profile.release] of contracts/invoice/Cargo.toml.
+        let invoice_id = client.create_invoice(&freelancer, &payer, &i128::MAX, &description);
+
+        let invoice = storage::get_invoice(&env, invoice_id);
+        assert_eq!(invoice.amount, i128::MAX);
     }
 }
