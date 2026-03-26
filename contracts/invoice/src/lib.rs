@@ -71,6 +71,11 @@ impl InvoiceContract {
         );
 
         let token = token::Client::new(&env, &token_address);
+        // SAFETY: Soroban cross-contract calls are synchronous and atomic within a single
+        // transaction. There is no re-entrant execution path — a callee cannot call back into
+        // this contract mid-transfer because Soroban does not support async callbacks or
+        // mid-transaction re-entry. State is committed only after the full call tree succeeds.
+        // See: https://developers.stellar.org/docs/learn/smart-contract-internals/contract-interactions/cross-contract
         token.transfer(&invoice.client, &env.current_contract_address(), &invoice.amount);
 
         invoice.status = storage::InvoiceStatus::Funded;
@@ -184,6 +189,11 @@ impl InvoiceContract {
     /// # TODO
     /// Not yet implemented. See: <https://github.com/your-org/StarInvoice/issues/4>
     pub fn release_payment(_env: Env, _invoice_id: u64) {
+        // SAFETY: When implemented, the token transfer here is safe from reentrancy.
+        // Soroban executes cross-contract calls synchronously within a single transaction;
+        // a callee cannot re-enter this contract mid-transfer. State updates should still
+        // be written before the transfer (checks-effects-interactions) as a best practice.
+        // See: https://developers.stellar.org/docs/learn/smart-contract-internals/contract-interactions/cross-contract
         todo!("release_payment not yet implemented")
     }
 }
