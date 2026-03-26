@@ -41,9 +41,10 @@ pub struct Invoice {
     pub description: String,
     /// Address of the token contract used for payment.
     pub token: Address,
+    /// Unix timestamp after which the invoice can no longer be funded.
+    pub deadline: u64,
     /// Current state of the invoice in the escrow lifecycle.
     pub status: InvoiceStatus,
-    // TODO: Add deadline / expiry field
 }
 
 #[contracttype]
