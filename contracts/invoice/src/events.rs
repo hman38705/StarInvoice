@@ -50,17 +50,6 @@ pub fn invoice_funded(env: &Env, invoice_id: u64, client: &Address) {
     );
 }
 
-/// Emits an event when an invoice is disputed.
-///
-/// Topic: `("INVOICE", "disputed")`
-/// Data:  `(invoice_id, raised_by)`
-pub fn invoice_disputed(env: &Env, invoice_id: u64, raised_by: &Address) {
-    env.events().publish(
-        (symbol_short!("INVOICE"), symbol_short!("disputed")),
-        (invoice_id, raised_by.clone()),
-    );
-}
-
 /// Emits an event when a freelancer marks an invoice as delivered.
 ///
 /// Topic: `("INVOICE", "deliverd")`

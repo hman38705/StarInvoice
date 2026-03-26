@@ -65,8 +65,8 @@ impl InvoiceContract {
     /// # Errors
     /// - Panics if the caller is not the invoice client.
     /// - Panics if the invoice status is not `Pending`.
-    pub fn fund_invoice(env: Env, invoice_id: u64, token_address: Address) -> Result<(), ContractError> {
-        let mut invoice = storage::get_invoice(&env, invoice_id)?;
+    pub fn fund_invoice(env: Env, invoice_id: u64) {
+        let mut invoice = storage::get_invoice(&env, invoice_id);
 
         invoice.client.require_auth();
 
