@@ -64,10 +64,10 @@ pub fn mark_delivered(env: &Env, invoice_id: u64, freelancer: &Address) {
 /// Emits an event when escrowed funds are released to the freelancer.
 ///
 /// Topic: `("INVOICE", "released")`
-/// Data:  `(invoice_id, freelancer)`
-pub fn payment_released(env: &Env, invoice_id: u64, freelancer: &Address) {
+/// Data:  `(invoice_id, freelancer, amount)`
+pub fn release_payment(env: &Env, invoice_id: u64, freelancer: &Address, amount: i128) {
     env.events().publish(
         (symbol_short!("INVOICE"), symbol_short!("released")),
-        (invoice_id, freelancer.clone()),
+        (invoice_id, freelancer.clone(), amount),
     );
 }
