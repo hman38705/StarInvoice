@@ -295,6 +295,40 @@ mod tests {
     }
 
     #[test]
+    #[should_panic(expected = "Invoice can only be cancelled from Pending status")]
+    fn test_cancel_invoice_from_funded() {
+        use soroban_sdk::testutils::Address as _;
+        use soroban_sdk::token;
+
+        let env = Env::default();
+        env.mock_all_auths();
+
+        let contract_id = env.register_contract(None, InvoiceContract);
+        let client = InvoiceContractClient::new(&env, &contract_id);
+
+        let freelancer = Address::generate(&env);
+        let payer = Address::generate(&env);
+        let description = String::from_str(&env, "Development services");
+        let amount: i128 = 1500;
+
+        // Deploy mock token
+        let token_admin = Address::generate(&env);
+        let token_id = env.register_stellar_asset_contract_v2(token_admin.clone());
+        let token_address = token_id.address();
+        let token_admin_client = token::StellarAssetClient::new(&env, &token_address);
+        token_admin_client.mint(&payer, &amount);
+
+        // Create invoice (Pending)
+        let invoice_id = client.create_invoice(&freelancer, &payer, &amount, &description);
+
+        // Fund it to Funded status
+        client.fund_invoice(&invoice_id, &token_address);
+
+        // Try to cancel from Funded -> should panic
+        let _ = client.cancel_invoice(&invoice_id, &freelancer);
+    }
+
+    #[test]
     fn test_fund_invoice_happy_path() {
         use soroban_sdk::testutils::Address as _;
         use soroban_sdk::token;
