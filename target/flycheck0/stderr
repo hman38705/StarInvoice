@@ -1,0 +1,95 @@
+warning: profiles for the non root package will be ignored, specify profiles at the workspace root:
+package:   /home/uche-ofatu/Downloads/StarInvoice/contracts/invoice/Cargo.toml
+workspace: /home/uche-ofatu/Downloads/StarInvoice/Cargo.toml
+   0.293367686s  INFO prepare_target{force=false package_id=star-invoice v0.1.0 (/home/uche-ofatu/Downloads/StarInvoice/contracts/invoice) target="star_invoice"}: cargo::core::compiler::fingerprint: fingerprint error for star-invoice v0.1.0 (/home/uche-ofatu/Downloads/StarInvoice/contracts/invoice)/Check { test: false }/TargetInner { name_inferred: true, ..: lib_target("star_invoice", ["cdylib"], "/home/uche-ofatu/Downloads/StarInvoice/contracts/invoice/src/lib.rs", Edition2021) }
+   0.293464059s  INFO prepare_target{force=false package_id=star-invoice v0.1.0 (/home/uche-ofatu/Downloads/StarInvoice/contracts/invoice) target="star_invoice"}: cargo::core::compiler::fingerprint:     err: failed to read `/home/uche-ofatu/Downloads/StarInvoice/target/debug/.fingerprint/star-invoice-66cda20adc7b1c93/lib-star_invoice`
+
+Caused by:
+    No such file or directory (os error 2)
+
+Stack backtrace:
+   0: cargo_util::paths::read_bytes
+   1: cargo_util::paths::read
+   2: cargo::core::compiler::fingerprint::_compare_old_fingerprint
+   3: cargo::core::compiler::fingerprint::prepare_target
+   4: cargo::core::compiler::compile
+   5: <cargo::core::compiler::build_runner::BuildRunner>::compile
+   6: cargo::ops::cargo_compile::compile_ws
+   7: cargo::ops::cargo_compile::compile_with_exec
+   8: cargo::ops::cargo_compile::compile
+   9: cargo::commands::check::exec
+  10: <cargo::cli::Exec>::exec
+  11: cargo::main
+  12: std::sys::backtrace::__rust_begin_short_backtrace::<fn(), ()>
+  13: std::rt::lang_start::<()>::{closure#0}
+  14: core::ops::function::impls::<impl core::ops::function::FnOnce<A> for &F>::call_once
+             at /rustc/1159e78c4747b02ef996e55082b704c09b970588/library/core/src/ops/function.rs:290:21
+  15: std::panicking::catch_unwind::do_call
+             at /rustc/1159e78c4747b02ef996e55082b704c09b970588/library/std/src/panicking.rs:589:40
+  16: std::panicking::catch_unwind
+             at /rustc/1159e78c4747b02ef996e55082b704c09b970588/library/std/src/panicking.rs:552:19
+  17: std::panic::catch_unwind
+             at /rustc/1159e78c4747b02ef996e55082b704c09b970588/library/std/src/panic.rs:359:14
+  18: std::rt::lang_start_internal::{{closure}}
+             at /rustc/1159e78c4747b02ef996e55082b704c09b970588/library/std/src/rt.rs:175:24
+  19: std::panicking::catch_unwind::do_call
+             at /rustc/1159e78c4747b02ef996e55082b704c09b970588/library/std/src/panicking.rs:589:40
+  20: std::panicking::catch_unwind
+             at /rustc/1159e78c4747b02ef996e55082b704c09b970588/library/std/src/panicking.rs:552:19
+  21: std::panic::catch_unwind
+             at /rustc/1159e78c4747b02ef996e55082b704c09b970588/library/std/src/panic.rs:359:14
+  22: std::rt::lang_start_internal
+             at /rustc/1159e78c4747b02ef996e55082b704c09b970588/library/std/src/rt.rs:171:5
+  23: main
+  24: __libc_start_call_main
+             at ./csu/../sysdeps/nptl/libc_start_call_main.h:58:16
+  25: __libc_start_main_impl
+             at ./csu/../csu/libc-start.c:360:3
+  26: <unknown>
+   0.481803065s  INFO prepare_target{force=false package_id=star-invoice v0.1.0 (/home/uche-ofatu/Downloads/StarInvoice/contracts/invoice) target="star_invoice"}: cargo::core::compiler::fingerprint: fingerprint error for star-invoice v0.1.0 (/home/uche-ofatu/Downloads/StarInvoice/contracts/invoice)/Check { test: true }/TargetInner { name_inferred: true, ..: lib_target("star_invoice", ["cdylib"], "/home/uche-ofatu/Downloads/StarInvoice/contracts/invoice/src/lib.rs", Edition2021) }
+   0.481835949s  INFO prepare_target{force=false package_id=star-invoice v0.1.0 (/home/uche-ofatu/Downloads/StarInvoice/contracts/invoice) target="star_invoice"}: cargo::core::compiler::fingerprint:     err: failed to read `/home/uche-ofatu/Downloads/StarInvoice/target/debug/.fingerprint/star-invoice-fe54bc70ee615976/test-lib-star_invoice`
+
+Caused by:
+    No such file or directory (os error 2)
+
+Stack backtrace:
+   0: cargo_util::paths::read_bytes
+   1: cargo_util::paths::read
+   2: cargo::core::compiler::fingerprint::_compare_old_fingerprint
+   3: cargo::core::compiler::fingerprint::prepare_target
+   4: cargo::core::compiler::compile
+   5: <cargo::core::compiler::build_runner::BuildRunner>::compile
+   6: cargo::ops::cargo_compile::compile_ws
+   7: cargo::ops::cargo_compile::compile_with_exec
+   8: cargo::ops::cargo_compile::compile
+   9: cargo::commands::check::exec
+  10: <cargo::cli::Exec>::exec
+  11: cargo::main
+  12: std::sys::backtrace::__rust_begin_short_backtrace::<fn(), ()>
+  13: std::rt::lang_start::<()>::{closure#0}
+  14: core::ops::function::impls::<impl core::ops::function::FnOnce<A> for &F>::call_once
+             at /rustc/1159e78c4747b02ef996e55082b704c09b970588/library/core/src/ops/function.rs:290:21
+  15: std::panicking::catch_unwind::do_call
+             at /rustc/1159e78c4747b02ef996e55082b704c09b970588/library/std/src/panicking.rs:589:40
+  16: std::panicking::catch_unwind
+             at /rustc/1159e78c4747b02ef996e55082b704c09b970588/library/std/src/panicking.rs:552:19
+  17: std::panic::catch_unwind
+             at /rustc/1159e78c4747b02ef996e55082b704c09b970588/library/std/src/panic.rs:359:14
+  18: std::rt::lang_start_internal::{{closure}}
+             at /rustc/1159e78c4747b02ef996e55082b704c09b970588/library/std/src/rt.rs:175:24
+  19: std::panicking::catch_unwind::do_call
+             at /rustc/1159e78c4747b02ef996e55082b704c09b970588/library/std/src/panicking.rs:589:40
+  20: std::panicking::catch_unwind
+             at /rustc/1159e78c4747b02ef996e55082b704c09b970588/library/std/src/panicking.rs:552:19
+  21: std::panic::catch_unwind
+             at /rustc/1159e78c4747b02ef996e55082b704c09b970588/library/std/src/panic.rs:359:14
+  22: std::rt::lang_start_internal
+             at /rustc/1159e78c4747b02ef996e55082b704c09b970588/library/std/src/rt.rs:171:5
+  23: main
+  24: __libc_start_call_main
+             at ./csu/../sysdeps/nptl/libc_start_call_main.h:58:16
+  25: __libc_start_main_impl
+             at ./csu/../csu/libc-start.c:360:3
+  26: <unknown>
+    Checking star-invoice v0.1.0 (/home/uche-ofatu/Downloads/StarInvoice/contracts/invoice)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1.30s

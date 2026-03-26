@@ -1,0 +1,5 @@
+/home/uche-ofatu/Downloads/StarInvoice/target/debug/deps/num_derive-7fb99d7cbd73d88a.d: /home/uche-ofatu/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/num-derive-0.4.2/src/lib.rs
+
+/home/uche-ofatu/Downloads/StarInvoice/target/debug/deps/libnum_derive-7fb99d7cbd73d88a.so: /home/uche-ofatu/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/num-derive-0.4.2/src/lib.rs
+
+/home/uche-ofatu/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/num-derive-0.4.2/src/lib.rs:
