@@ -1,0 +1,5 @@
+/home/uche-ofatu/Downloads/StarInvoice/target/debug/build/soroban-sdk-c04cd19f9cc63a80/build_script_build-c04cd19f9cc63a80.d: /home/uche-ofatu/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/soroban-sdk-21.7.7/build.rs
+
+/home/uche-ofatu/Downloads/StarInvoice/target/debug/build/soroban-sdk-c04cd19f9cc63a80/build_script_build-c04cd19f9cc63a80: /home/uche-ofatu/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/soroban-sdk-21.7.7/build.rs
+
+/home/uche-ofatu/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/soroban-sdk-21.7.7/build.rs:

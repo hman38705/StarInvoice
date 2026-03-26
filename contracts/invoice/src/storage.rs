@@ -45,6 +45,14 @@ enum DataKey {
     InvoiceCount,
 }
 
+/// Returns the current invoice count.
+pub fn get_invoice_count(env: &Env) -> u64 {
+    env.storage()
+        .instance()
+        .get(&DataKey::InvoiceCount)
+        .unwrap_or(0)
+}
+
 /// Returns the next available invoice ID and increments the counter.
 pub fn next_invoice_id(env: &Env) -> u64 {
     let count: u64 = env

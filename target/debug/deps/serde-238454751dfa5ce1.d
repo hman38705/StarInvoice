@@ -1,0 +1,14 @@
+/home/uche-ofatu/Downloads/StarInvoice/target/debug/deps/serde-238454751dfa5ce1.d: /home/uche-ofatu/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/lib.rs /home/uche-ofatu/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/integer128.rs /home/uche-ofatu/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/mod.rs /home/uche-ofatu/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/de.rs /home/uche-ofatu/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/ser.rs /home/uche-ofatu/Downloads/StarInvoice/target/debug/build/serde-f38b255d54569d39/out/private.rs
+
+/home/uche-ofatu/Downloads/StarInvoice/target/debug/deps/libserde-238454751dfa5ce1.rlib: /home/uche-ofatu/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/lib.rs /home/uche-ofatu/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/integer128.rs /home/uche-ofatu/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/mod.rs /home/uche-ofatu/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/de.rs /home/uche-ofatu/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/ser.rs /home/uche-ofatu/Downloads/StarInvoice/target/debug/build/serde-f38b255d54569d39/out/private.rs
+
+/home/uche-ofatu/Downloads/StarInvoice/target/debug/deps/libserde-238454751dfa5ce1.rmeta: /home/uche-ofatu/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/lib.rs /home/uche-ofatu/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/integer128.rs /home/uche-ofatu/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/mod.rs /home/uche-ofatu/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/de.rs /home/uche-ofatu/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/ser.rs /home/uche-ofatu/Downloads/StarInvoice/target/debug/build/serde-f38b255d54569d39/out/private.rs
+
+/home/uche-ofatu/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/lib.rs:
+/home/uche-ofatu/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/integer128.rs:
+/home/uche-ofatu/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/mod.rs:
+/home/uche-ofatu/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/de.rs:
+/home/uche-ofatu/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/ser.rs:
+/home/uche-ofatu/Downloads/StarInvoice/target/debug/build/serde-f38b255d54569d39/out/private.rs:
+
+# env-dep:OUT_DIR=/home/uche-ofatu/Downloads/StarInvoice/target/debug/build/serde-f38b255d54569d39/out

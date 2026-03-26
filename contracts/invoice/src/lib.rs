@@ -130,6 +130,11 @@ impl InvoiceContract {
         events::approve_payment(&env, invoice_id, &invoice.client);
     }
 
+    /// Returns the current number of invoices.
+    pub fn invoice_count(env: Env) -> u64 {
+        storage::get_invoice_count(&env)
+    }
+
     /// Cancels a Pending invoice, voiding it permanently.
     ///
     /// # Parameters
@@ -316,5 +321,34 @@ mod tests {
         let token_client = token::Client::new(&env, &token_address);
         assert_eq!(token_client.balance(&contract_id), amount);
         assert_eq!(token_client.balance(&payer), 0);
+    }
+    #[test]
+    fn test_invoice_count() {
+        let env = Env::default();
+        env.mock_all_auths();
+
+        let contract_id = env.register_contract(None, InvoiceContract);
+        let client = InvoiceContractClient::new(&env, &contract_id);
+
+        assert_eq!(client.invoice_count(), 0);
+
+        let freelancer = Address::generate(&env);
+        let payer = Address::generate(&env);
+
+        client.create_invoice(
+            &freelancer,
+            &payer,
+            &1000,
+            &String::from_str(&env, "Desc 1"),
+        );
+        assert_eq!(client.invoice_count(), 1);
+
+        client.create_invoice(
+            &freelancer,
+            &payer,
+            &2000,
+            &String::from_str(&env, "Desc 2"),
+        );
+        assert_eq!(client.invoice_count(), 2);
     }
 }
